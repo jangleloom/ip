@@ -16,6 +16,7 @@ public class MrDucky {
         while (true) {
             String input = sc.nextLine();
             try {
+                // Handles the input, tasks list, and line separator for printing
                 if (handleInput(input, tasks, line)) {
                     break;
                 }
@@ -95,11 +96,22 @@ public class MrDucky {
             tasks.add(new Event(parts[0].trim(), timeParts[0].trim(), timeParts[1].trim()));
             printAddMessage(tasks, line);
             return false;
+        } else if (input.startsWith("delete")) {
+            int index = parseIndex(input, "delete");
+            Task t = tasks.remove(index);
+            System.out.println(line);
+            System.out.println("Noted. I've removed this task:");
+            System.out.println("  " + t);
+            System.out.println("Now you have " + tasks.size() + " tasks in the list.");
+            System.out.println(line);
+            return false;
         }
 
         throw new DukeException("OOPS!!! I'm sorry, but I don't know what that means :-(");
     }
 
+    // Helper function to parse index from commands like mark, unmark, delete
+    // Try and catch to handle invalid formats and out-of-bounds errors e.g. negative numbers or non-integers
     private static int parseIndex(String input, String command) throws DukeException {
         String[] parts = input.split(" ", 2);
         if (parts.length < 2 || parts[1].trim().isEmpty()) {
