@@ -14,18 +14,15 @@ public class MrDucky {
         System.out.println("What can I do for you?");
         System.out.println(line);
 
-        // Loop: Read line, if bye then exit, else if list, print all stored items 
-        // else: add to list, print added: <input>
         while (true) {
             String input = sc.nextLine();
         
-            if (input.equals("bye")){
+            if (input.equals("bye")) {
                 System.out.println(line);
                 System.out.println("Bye. Hope to see you again soon!");
                 System.out.println(line);
                 break; // Exit the loop and program
-            }
-            if (input.equals("list")) {
+            } else if (input.equals("list")) {
                 System.out.println(line);
                 System.out.println("Here are the tasks in your list:");
                 for (int i = 0; i < tasks.size(); i++) {
@@ -33,8 +30,7 @@ public class MrDucky {
                 }
                 System.out.println(line);
                 continue;
-            } 
-            else if (input.startsWith("mark ")) {
+            } else if (input.startsWith("mark ")) {
                 // Separate the index out 
                 String[] parts = input.split(" ", 2);
                 int index = Integer.parseInt(parts[1].trim()) - 1;
@@ -43,26 +39,56 @@ public class MrDucky {
                 doneTask.isDone = true; 
                 System.out.println(line);
                 System.out.println("Nice! I've marked this task as done:");
-                System.out.println(" " + doneTask);
+                System.out.println("  " + doneTask);
                 System.out.println(line);
-            }
-            else if (input.startsWith("unmark ")) {
+            } else if (input.startsWith("unmark ")) {
                 String[] parts = input.split(" ", 2);
                 int index = Integer.parseInt(parts[1].trim()) - 1;
                 Task undoneTask = tasks.get(index);
                 undoneTask.isDone = false; 
                 System.out.println(line);
                 System.out.println("OK, I've marked this task as not done yet:");
-                System.out.println(undoneTask);
+                System.out.println("  " + undoneTask);
                 System.out.println(line);
-            }
-            else {
-                Task newTask = new Task(input);
-                tasks.add(newTask);
+            } else if (input.startsWith("todo ")) {
+                String description = input.substring(5).trim();
+                tasks.add(new ToDo(description));
                 System.out.println(line);
-                System.out.println("added: " + input);
+                System.out.println("Got it. I've added this task:");
+                System.out.println("  " + tasks.get(tasks.size() - 1));
+                System.out.println("Now you have " + tasks.size() + " tasks in the list.");
                 System.out.println(line);
-
+            } else if (input.startsWith("deadline ")) {
+                String details = input.substring(9).trim();
+                String[] parts = details.split(" /by ", 2);
+                String description = parts[0].trim();
+                String by = parts[1].trim();
+                tasks.add(new Deadline(description, by));
+                System.out.println(line);
+                System.out.println("Got it. I've added this task:");
+                System.out.println("  " + tasks.get(tasks.size() - 1));
+                System.out.println("Now you have " + tasks.size() + " tasks in the list.");
+                System.out.println(line);
+            } else if (input.startsWith("event ")) {
+                String details = input.substring(6).trim();
+                String[] parts = details.split(" /from ", 2);
+                String description = parts[0].trim();
+                String[] timeParts = parts[1].split(" /to ", 2);
+                String from = timeParts[0].trim();
+                String to = timeParts[1].trim();
+                tasks.add(new Event(description, from, to));
+                System.out.println(line);
+                System.out.println("Got it. I've added this task:");
+                System.out.println("  " + tasks.get(tasks.size() - 1));
+                System.out.println("Now you have " + tasks.size() + " tasks in the list.");
+                System.out.println(line);
+            } else {
+                tasks.add(new ToDo(input));
+                System.out.println(line);
+                System.out.println("Got it. I've added this task:");
+                System.out.println("  " + tasks.get(tasks.size() - 1));
+                System.out.println("Now you have " + tasks.size() + " tasks in the list.");
+                System.out.println(line);
             }
             
         }
