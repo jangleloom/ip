@@ -4,6 +4,11 @@ public class Deadline extends Task {
         super(description);
         this.due = due;
     }
+
+    public String getDue() {
+        return due;
+    }
+
     @Override
     public String toString() {
         return "[D]" + super.toString() + " (by: " + due + ")";
