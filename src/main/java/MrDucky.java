@@ -1,12 +1,14 @@
 import java.util.Scanner;
 import java.util.List;
-import java.util.ArrayList;
+import java.nio.file.Path;
 
 public class MrDucky {
     public static void main(String[] args) {
         String line = "____________________________________________________________";
         Scanner sc = new Scanner(System.in);
-        List<Task> tasks = new ArrayList<>();
+
+        Storage storage = new Storage(Path.of("data", "mrducky.txt"));
+        List<Task> tasks = storage.load();
 
         System.out.println(line);
         System.out.println("Hello! I'm MrDucky");
@@ -17,7 +19,7 @@ public class MrDucky {
             String input = sc.nextLine();
             try {
                 // Handles the input, tasks list, and line separator for printing
-                if (handleInput(input, tasks, line)) {
+                if (handleInput(input, tasks, storage, line)) {
                     break;
                 }
             } catch (DukeException e) {
@@ -28,7 +30,9 @@ public class MrDucky {
         }
     }
 
-    private static boolean handleInput(String input, List<Task> tasks, String line) throws DukeException {
+    // Helper function to handle user input and perform corresponding actions on tasks list
+    // Separated from main for clarity, use try/catch around each call to handle exceptions 
+    private static boolean handleInput(String input, List<Task> tasks, Storage storage, String line) throws DukeException {
         if (input.equals("bye")) {
             System.out.println(line);
             System.out.println("Bye. Hope to see you again soon!");
@@ -46,6 +50,7 @@ public class MrDucky {
             int index = parseIndex(input, "mark");
             Task t = tasks.get(index);
             t.isDone = true;
+            storage.save(tasks);
             System.out.println(line);
             System.out.println("Nice! I've marked this task as done:");
             System.out.println("  " + t);
@@ -55,6 +60,7 @@ public class MrDucky {
             int index = parseIndex(input, "unmark");
             Task t = tasks.get(index);
             t.isDone = false;
+            storage.save(tasks);
             System.out.println(line);
             System.out.println("OK, I've marked this task as not done yet:");
             System.out.println("  " + t);
@@ -66,6 +72,7 @@ public class MrDucky {
                 throw new DukeException("OOPS!!! The description of a todo cannot be empty.");
             }
             tasks.add(new ToDo(desc));
+            storage.save(tasks);
             printAddMessage(tasks, line);
             return false;
         } else if (input.startsWith("deadline")) {
@@ -78,6 +85,7 @@ public class MrDucky {
                 throw new DukeException("OOPS!!! A deadline needs a /by time.");
             }
             tasks.add(new Deadline(parts[0].trim(), parts[1].trim()));
+            storage.save(tasks);
             printAddMessage(tasks, line);
             return false;
         } else if (input.startsWith("event")) {
@@ -94,11 +102,13 @@ public class MrDucky {
                 throw new DukeException("OOPS!!! An event needs both /from and /to times.");
             }
             tasks.add(new Event(parts[0].trim(), timeParts[0].trim(), timeParts[1].trim()));
+            storage.save(tasks);
             printAddMessage(tasks, line);
             return false;
         } else if (input.startsWith("delete")) {
             int index = parseIndex(input, "delete");
             Task t = tasks.remove(index);
+            storage.save(tasks);
             System.out.println(line);
             System.out.println("Noted. I've removed this task:");
             System.out.println("  " + t);
