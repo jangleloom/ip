@@ -1,3 +1,5 @@
+package mrducky.task;
+
 /**
  * Represents a to-do task.
  */

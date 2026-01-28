@@ -17,3 +17,9 @@ bin/
 /text-ui-test/EXPECTED.TXT
 text-ui-test/EXPECTED-UNIX.TXT
 
+# Local runtime data and test scripts
+/data/mrducky.txt
+/text-ui-test/runtest.bat
+/text-ui-test/runtest.sh
+
+

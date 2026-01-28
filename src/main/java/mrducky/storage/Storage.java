@@ -1,3 +1,9 @@
+package mrducky.storage;
+
+import mrducky.task.Deadline;
+import mrducky.task.Event;
+import mrducky.task.Task;
+import mrducky.task.ToDo;
 import java.util.List;
 import java.util.ArrayList;
 import java.nio.file.Files;
@@ -117,21 +123,21 @@ public class Storage {
             default:
                 return null; // Unknown task type
         }
-        task.isDone = isDone;
+        task.setDone(isDone);
         return task;
     }
 
     private String formatTask(Task task) {
-        String done = task.isDone ? "1" : "0";
+        String done = task.isDone() ? "1" : "0";
 
         if (task instanceof ToDo) {
-            return "T | " + done + " | " + task.description;
+            return "T | " + done + " | " + task.getDescription();
         } else if (task instanceof Deadline) {
             Deadline d = (Deadline) task;
-            return "D | " + done + " | " + task.description + " | " + d.getDue();
+            return "D | " + done + " | " + task.getDescription() + " | " + d.getDue();
         } else if (task instanceof Event) {
             Event e = (Event) task;
-            return "E | " + done + " | " + task.description + " | " + e.getFrom() + " | " + e.getTo();
+            return "E | " + done + " | " + task.getDescription() + " | " + e.getFrom() + " | " + e.getTo();
         } else {
             throw new IllegalArgumentException("Unknown task type");
         }

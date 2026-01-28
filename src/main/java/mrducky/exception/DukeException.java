@@ -1,3 +1,5 @@
+package mrducky.exception;
+
 /**
  * Signals an error in user input or task operations.
  */

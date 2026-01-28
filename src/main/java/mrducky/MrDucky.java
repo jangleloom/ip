@@ -1,3 +1,12 @@
+package mrducky;
+
+import mrducky.exception.DukeException;
+import mrducky.storage.Storage;
+import mrducky.task.Deadline;
+import mrducky.task.Event;
+import mrducky.task.Task;
+import mrducky.task.ToDo;
+import mrducky.ui.Ui;
 import java.util.List;
 import java.nio.file.Path;
 import java.time.LocalDateTime;
@@ -46,14 +55,14 @@ public class MrDucky {
         } else if (input.startsWith("mark")) {
             int index = parseIndex(input, "mark");
             Task t = tasks.get(index);
-            t.isDone = true;
+            t.mark();
             storage.save(tasks);
             ui.showMarkedTask(t);
             return false;
         } else if (input.startsWith("unmark")) {
             int index = parseIndex(input, "unmark");
             Task t = tasks.get(index);
-            t.isDone = false;
+            t.unmark();
             storage.save(tasks);
             ui.showUnmarkedTask(t);
             return false;
