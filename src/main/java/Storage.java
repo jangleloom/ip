@@ -4,13 +4,26 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.io.IOException;
 
+/**
+ * Stores and loads tasks to and from disk.
+ */
 public class Storage {
     private final Path filePath;
 
+    /**
+     * Creates a storage handler that reads and writes to the given file path.
+     *
+     * @param filePath Path to the data file.
+     */
     public Storage(Path filePath) {
         this.filePath = filePath;
     }
 
+    /**
+     * Returns tasks loaded from the data file.
+     *
+     * @return List of tasks loaded from disk.
+     */
     public List<Task> load() {
         // If file/folder doesn't exist, create new ArrayList<>()
         List<Task> tasks = new ArrayList<>();
@@ -33,7 +46,11 @@ public class Storage {
         return tasks;
     }
 
-    // Converts list of Task objects to lines and writes to file
+    /**
+     * Saves the given tasks to the data file.
+     *
+     * @param tasks Tasks to save.
+     */
     public void save(List<Task> tasks) {
         // Ensure parent folder exists
         try {

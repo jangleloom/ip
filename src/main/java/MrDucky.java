@@ -2,7 +2,15 @@ import java.util.Scanner;
 import java.util.List;
 import java.nio.file.Path;
 
+/**
+ * Runs the MrDucky chatbot application.
+ */
 public class MrDucky {
+    /**
+     * Runs the chatbot program loop.
+     *
+     * @param args Command-line arguments.
+     */
     public static void main(String[] args) {
         String line = "____________________________________________________________";
         Scanner sc = new Scanner(System.in);
