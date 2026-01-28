@@ -3,6 +3,7 @@ import java.util.ArrayList;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.io.IOException;
+import java.time.LocalDateTime;
 
 /**
  * Stores and loads tasks to and from disk.
@@ -102,15 +103,15 @@ public class Storage {
                 if (parts.length < 4) {
                     return null; // Invalid Deadline format
                 }
-                String due = parts[3];
+                LocalDateTime due = LocalDateTime.parse(parts[3]);
                 task = new Deadline(description, due);
                 break;
             case "E":
                 if (parts.length < 5) {
                     return null; // Invalid Event format
                 }
-                String from = parts[3];
-                String to = parts[4];
+                LocalDateTime from = LocalDateTime.parse(parts[3]);
+                LocalDateTime to = LocalDateTime.parse(parts[4]);
                 task = new Event(description, from, to);
                 break;
             default:

@@ -1,6 +1,9 @@
 import java.util.Scanner;
 import java.util.List;
 import java.nio.file.Path;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 
 /**
  * Runs the MrDucky chatbot application.
@@ -88,11 +91,21 @@ public class MrDucky {
             if (details.isEmpty()) {
                 throw new DukeException("OOPS!!! The description of a deadline cannot be empty.");
             }
+            // Parse date string to LocalDateTime
             String[] parts = details.split(" /by ", 2);
             if (parts.length < 2 || parts[1].trim().isEmpty()) {
                 throw new DukeException("OOPS!!! A deadline needs a /by time.");
             }
-            tasks.add(new Deadline(parts[0].trim(), parts[1].trim()));
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/MM/yyyy HHmm");
+            LocalDateTime due;
+            // Parse and handle invalid format
+            try {
+                due = LocalDateTime.parse(parts[1].trim(), formatter);
+            } catch (DateTimeParseException e) {
+                throw new DukeException("OOPS!!! Please use d/MM/yyyy HHmm for deadlines. "
+                        + "Example: 2/12/2019 1800");
+            }
+            tasks.add(new Deadline(parts[0].trim(), due));
             storage.save(tasks);
             printAddMessage(tasks, line);
             return false;
@@ -109,7 +122,17 @@ public class MrDucky {
             if (timeParts.length < 2 || timeParts[0].trim().isEmpty() || timeParts[1].trim().isEmpty()) {
                 throw new DukeException("OOPS!!! An event needs both /from and /to times.");
             }
-            tasks.add(new Event(parts[0].trim(), timeParts[0].trim(), timeParts[1].trim()));
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/MM/yyyy HHmm");
+            LocalDateTime from;
+            LocalDateTime to;
+            try {
+                from = LocalDateTime.parse(timeParts[0].trim(), formatter);
+                to = LocalDateTime.parse(timeParts[1].trim(), formatter);
+            } catch (DateTimeParseException e) {
+                throw new DukeException("OOPS!!! Please use d/MM/yyyy HHmm for events. "
+                        + "Example: 2/12/2019 1800");
+            }
+            tasks.add(new Event(parts[0].trim(), from, to));
             storage.save(tasks);
             printAddMessage(tasks, line);
             return false;
