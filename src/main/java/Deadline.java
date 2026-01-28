@@ -1,8 +1,10 @@
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 /**
  * Represents a deadline task with a due time.
  */
 public class Deadline extends Task {
-    private String due;
+    private LocalDateTime due;
 
     /**
      * Creates a deadline task with a description and due time.
@@ -10,17 +12,18 @@ public class Deadline extends Task {
      * @param description Task description.
      * @param due Due time for the task.
      */
-    public Deadline(String description, String due) {
+    public Deadline(String description, LocalDateTime due) {
         super(description);
         this.due = due;
     }
 
-    public String getDue() {
+    public LocalDateTime getDue() {
         return due;
     }
 
     @Override
     public String toString() {
-        return "[D]" + super.toString() + " (by: " + due + ")";
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM d yyyy, h:mm a");
+        return "[D]" + super.toString() + " (by: " + due.format(formatter) + ")";
     }
 }
