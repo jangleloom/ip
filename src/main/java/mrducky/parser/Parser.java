@@ -33,7 +33,11 @@ public class Parser {
             throw new DukeException("OOPS!!! The index for " + command + " cannot be empty.");
         }
         try {
-            return Integer.parseInt(parts[1].trim()) - 1; // Convert to zero-based index
+            int index = Integer.parseInt(parts[1].trim());
+            if (index <= 0) {
+                throw new DukeException("OOPS!!! The index for " + command + " must be a positive number.");
+            }
+            return index - 1; 
         } catch (NumberFormatException e) {
             throw new DukeException("OOPS!!! The index for " + command + " must be a valid number.");
         }
