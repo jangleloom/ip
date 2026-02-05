@@ -6,7 +6,7 @@ package mrducky.task;
 public class Task {
     private final String description;
     private boolean isDone;
-    
+
     Task(String description) {
         this.isDone = false;
         this.description = description;
@@ -53,7 +53,7 @@ public class Task {
         isDone = done;
     }
 
-    @Override 
+    @Override
     public String toString() {
         return (isDone ? "[X] " : "[ ] ") + description;
     }

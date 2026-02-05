@@ -9,7 +9,7 @@ import java.time.format.DateTimeFormatter;
 public class Event extends Task {
     private LocalDateTime from;
     private LocalDateTime to;
-    
+
     /**
      * Creates an event task with a description, start time, and end time.
      *
@@ -31,7 +31,8 @@ public class Event extends Task {
         return to;
     }
 
-    @Override public String toString() {
+    @Override
+    public String toString() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM d yyyy, h:mm a");
         return "[E]" + super.toString() + " (from: " + from.format(formatter) + " to: " + to.format(formatter) + ")";
     }

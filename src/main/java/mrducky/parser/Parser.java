@@ -1,10 +1,13 @@
 package mrducky.parser;
+
 import mrducky.exception.DukeException;
-/** 
+
+/**
  * Parses user input commands for the task manager application.
  */
 public class Parser {
-    /** Parses the command word from user input.
+    /**
+     * Parses the command word from user input.
      *
      * @param input User input string.
      * @return The command word.
@@ -17,7 +20,8 @@ public class Parser {
         return words[0];
     }
 
-    /** Parses the index from user input for commands like mark, unmark, delete.
+    /**
+     * Parses the index from user input for commands like mark, unmark, delete.
      *
      * @param input User input string.
      * @param command The command word (for error messages).
@@ -37,13 +41,14 @@ public class Parser {
             if (index <= 0) {
                 throw new DukeException("OOPS!!! The index for " + command + " must be a positive number.");
             }
-            return index - 1; 
+            return index - 1;
         } catch (NumberFormatException e) {
             throw new DukeException("OOPS!!! The index for " + command + " must be a valid number.");
         }
     }
 
-    /** Parses the description for a todo task from user input.
+    /**
+     * Parses the description for a todo task from user input.
      *
      * @param input User input string.
      * @return The todo description.
@@ -57,7 +62,8 @@ public class Parser {
         return details;
     }
 
-    /** Parses the description and due date for a deadline task from user input.
+    /**
+     * Parses the description and due date for a deadline task from user input.
      *
      * @param input User input string.
      * @return An array with description at index 0 and due date at index 1.
@@ -75,7 +81,8 @@ public class Parser {
         return new String[]{parts[0].trim(), parts[1].trim()};
     }
 
-    /** Parses the description, from date, and to date for an event task from user input.
+    /**
+     * Parses the description, from date, and to date for an event task from user input.
      *
      * @param input User input string.
      * @return An array with description at index 0, from date at index 1, and to date at index 2.

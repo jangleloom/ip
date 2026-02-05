@@ -1,15 +1,16 @@
 package mrducky.storage;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+
 import mrducky.task.Deadline;
 import mrducky.task.Event;
 import mrducky.task.Task;
 import mrducky.task.ToDo;
-import java.util.List;
-import java.util.ArrayList;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.io.IOException;
-import java.time.LocalDateTime;
 
 /**
  * Stores and loads tasks to and from disk.
@@ -65,7 +66,7 @@ public class Storage {
             if (parentDir != null) {
                 Files.createDirectories(parentDir);
             }
-            
+
             // Create empty list to hold lines
             List<String> lines = new ArrayList<>();
             for (Task task : tasks) {
@@ -102,26 +103,26 @@ public class Storage {
 
         Task task;
         switch (type) {
-            case "T":
-                task = new ToDo(description);
-                break;
-            case "D":
-                if (parts.length < 4) {
-                    return null; // Invalid Deadline format
-                }
-                LocalDateTime due = LocalDateTime.parse(parts[3]);
-                task = new Deadline(description, due);
-                break;
-            case "E":
-                if (parts.length < 5) {
-                    return null; // Invalid Event format
-                }
-                LocalDateTime from = LocalDateTime.parse(parts[3]);
-                LocalDateTime to = LocalDateTime.parse(parts[4]);
-                task = new Event(description, from, to);
-                break;
-            default:
-                return null; // Unknown task type
+        case "T":
+            task = new ToDo(description);
+            break;
+        case "D":
+            if (parts.length < 4) {
+                return null; // Invalid Deadline format
+            }
+            LocalDateTime due = LocalDateTime.parse(parts[3]);
+            task = new Deadline(description, due);
+            break;
+        case "E":
+            if (parts.length < 5) {
+                return null; // Invalid Event format
+            }
+            LocalDateTime from = LocalDateTime.parse(parts[3]);
+            LocalDateTime to = LocalDateTime.parse(parts[4]);
+            task = new Event(description, from, to);
+            break;
+        default:
+            return null; // Unknown task type
         }
         task.setDone(isDone);
         return task;

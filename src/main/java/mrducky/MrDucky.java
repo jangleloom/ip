@@ -1,18 +1,19 @@
 package mrducky;
 
+import java.nio.file.Path;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+import java.util.List;
+
 import mrducky.exception.DukeException;
+import mrducky.parser.Parser;
 import mrducky.storage.Storage;
 import mrducky.task.Deadline;
 import mrducky.task.Event;
 import mrducky.task.Task;
 import mrducky.task.ToDo;
 import mrducky.ui.Ui;
-import mrducky.parser.Parser;
-import java.util.List;
-import java.nio.file.Path;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
 
 /**
  * Runs the MrDucky chatbot application.
@@ -45,30 +46,40 @@ public class MrDucky {
     }
 
     // Helper function to handle user input and perform corresponding actions on tasks list
-    // Separated from main for clarity, use try/catch around each call to handle exceptions 
+    // Separated from main for clarity, use try/catch around each call to handle exceptions
     private static boolean handleInput(String input, List<Task> tasks, Storage storage, Ui ui) throws DukeException {
-        if (input.equals("bye")) {
+        String trimmed = input == null ? "" : input.trim();
+        if (trimmed.isEmpty()) {
+            return false;
+        }
+
+        String command = Parser.getCommandWord(trimmed).toLowerCase();
+        boolean hasNoArgs = trimmed.equalsIgnoreCase(command);
+        if (command.equals("bye") && hasNoArgs) {
             ui.showGoodbye();
             return true;
-        } else if (input.equals("list")) {
+        } else if (command.equals("list") && hasNoArgs) {
             ui.showTaskList(tasks);
             return false;
-        } else if (input.startsWith("mark")) {
-            int index = Parser.parseIndex(input, "mark");
+        } else if (command.equals("help") && hasNoArgs) {
+            ui.showHelp();
+            return false;
+        } else if (command.equals("mark")) {
+            int index = Parser.parseIndex(trimmed, "mark");
             Task t = tasks.get(index);
             t.mark();
             storage.save(tasks);
             ui.showMarkedTask(t);
             return false;
-        } else if (input.startsWith("unmark")) {
-            int index = Parser.parseIndex(input, "unmark");
+        } else if (command.equals("unmark")) {
+            int index = Parser.parseIndex(trimmed, "unmark");
             Task t = tasks.get(index);
             t.unmark();
             storage.save(tasks);
             ui.showUnmarkedTask(t);
             return false;
-        } else if (input.startsWith("todo")) {
-            String desc = Parser.parseTodo(input);
+        } else if (command.equals("todo")) {
+            String desc = Parser.parseTodo(trimmed);
             if (desc.isEmpty()) {
                 throw new DukeException("OOPS!!! The description of a todo cannot be empty.");
             }
@@ -77,8 +88,8 @@ public class MrDucky {
             storage.save(tasks);
             ui.showAddedTask(newTask, tasks.size());
             return false;
-        } else if (input.startsWith("deadline")) {
-            String[] parts = Parser.parseDeadline(input);
+        } else if (command.equals("deadline")) {
+            String[] parts = Parser.parseDeadline(trimmed);
             if (parts[0].isEmpty()) {
                 throw new DukeException("OOPS!!! The description of a deadline cannot be empty.");
             }
@@ -100,8 +111,8 @@ public class MrDucky {
             storage.save(tasks);
             ui.showAddedTask(newTask, tasks.size());
             return false;
-        } else if (input.startsWith("event")) {
-            String details = input.substring(5).trim();
+        } else if (command.equals("event")) {
+            String details = trimmed.substring(5).trim();
             if (details.isEmpty()) {
                 throw new DukeException("OOPS!!! The description of an event cannot be empty.");
             }
@@ -128,19 +139,20 @@ public class MrDucky {
             storage.save(tasks);
             ui.showAddedTask(newTask, tasks.size());
             return false;
-        } else if (input.startsWith("delete")) {
-            int index = Parser.parseIndex(input, "delete");
+        } else if (command.equals("delete")) {
+            int index = Parser.parseIndex(trimmed, "delete");
             Task t = tasks.remove(index);
             storage.save(tasks);
             ui.showDeletedTask(t, tasks.size());
             return false;
-        } else if (input.startsWith("find")) {
-            String keyword = input.substring(4).trim();
+        } else if (command.equals("find")) {
+            String keyword = trimmed.substring(4).trim();
             if (keyword.isEmpty()) {
                 throw new DukeException("OOPS!!! The keyword for find cannot be empty.");
             }
+            String normalizedKeyword = keyword.toLowerCase();
             List<Task> foundTasks = tasks.stream()
-                    .filter(task -> task.getDescription().toLowerCase().contains(keyword))
+                    .filter(task -> task.getDescription().toLowerCase().contains(normalizedKeyword))
                     .toList();
             ui.showFoundTasks(foundTasks);
             return false;

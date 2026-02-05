@@ -1,17 +1,18 @@
 package mrducky.ui;
 
-import mrducky.task.Task;
-import java.util.Scanner;
 import java.util.List;
+import java.util.Scanner;
+
+import mrducky.task.Task;
 
 /**
  * Handles user interactions for the chatbot.
- */ 
+ */
 public class Ui {
+    private static final String LINE = "____________________________________________________________";
     private final Scanner scanner;
-    private static final String LINE = "____________________________________________________________"; 
 
-    /**  
+    /**
      * Initializes the UI with a new Scanner for user input.
     */
     public Ui() {
@@ -43,7 +44,7 @@ public class Ui {
     public void showLine() {
         System.out.println(LINE);
     }
-    
+
     /**
      * Reads a command from the user.
      *
@@ -52,7 +53,7 @@ public class Ui {
     public String readCommand() {
         return scanner.nextLine();
     }
-    
+
     /**
      * Displays a message when a task is added.
      *
@@ -156,6 +157,24 @@ public class Ui {
                 System.out.println((i + 1) + "." + foundTasks.get(i));
             }
         }
+        showLine();
+    }
+
+    /**
+     * Displays a help message with available commands.
+     */
+    public void showHelp() {
+        showLine();
+        System.out.println("Here are the commands you can use:");
+        System.out.println("  list");
+        System.out.println("  todo <description>");
+        System.out.println("  deadline <description> /by d/MM/yyyy HHmm");
+        System.out.println("  event <description> /from d/MM/yyyy HHmm /to d/MM/yyyy HHmm");
+        System.out.println("  mark <index>");
+        System.out.println("  unmark <index>");
+        System.out.println("  delete <index>");
+        System.out.println("  find <keyword>");
+        System.out.println("  bye");
         showLine();
     }
 }

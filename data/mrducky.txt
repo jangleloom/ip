@@ -1,7 +1,4 @@
+D | 0 | submit ip | 2026-02-06T23:59
+E | 1 | project meeting | 2026-02-07T14:00 | 2026-02-07T15:30
 T | 0 | read book
-E | 0 | project meeting | 2019-12-03T09:00 | 2019-12-03T11:00
-D | 1 | return book | 2019-12-02T18:00
-T | 0 | read book
-D | 0 | return book | 2021-12-03T18:00
-T | 0 | read book
-D | 0 | return book | 2019-06-06T18:00
+E | 1 | project meeting | 2026-02-07T14:00 | 2026-02-07T14:30

@@ -1,11 +1,11 @@
 package mrducky.task;
 
 import java.util.List;
- 
- /**
-  * Represents a list of tasks.
-  * Has methods to add, delete, mark, and unmark tasks.
-  */
+
+/**
+ * Represents a list of tasks.
+ * Has methods to add, delete, mark, and unmark tasks.
+ */
 public class TaskList {
     private final List<Task> tasks;
 
@@ -72,6 +72,4 @@ public class TaskList {
     public Task getTasks(int index) {
         return tasks.get(index);
     }
-
-    
 }

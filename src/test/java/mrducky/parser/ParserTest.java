@@ -1,10 +1,11 @@
 package mrducky.parser;
 
-import mrducky.exception.DukeException;
-import org.junit.jupiter.api.Test;
-
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+
+import org.junit.jupiter.api.Test;
+
+import mrducky.exception.DukeException;
 
 /**
  * Tests parsing of user inputs.
