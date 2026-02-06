@@ -3,13 +3,13 @@ package mrducky.exception;
 /**
  * Signals an error in user input or task operations.
  */
-public class DukeException extends Exception {
+public class MrDuckyException extends Exception {
     /**
-     * Creates a DukeException with the given message.
+     * Creates a MrDuckyException with the given message.
      *
      * @param message Exception message.
      */
-    public DukeException(String message) {
+    public MrDuckyException(String message) {
         super(message);
     }
 }

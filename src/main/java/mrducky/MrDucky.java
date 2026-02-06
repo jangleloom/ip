@@ -6,7 +6,7 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.List;
 
-import mrducky.exception.DukeException;
+import mrducky.exception.MrDuckyException;
 import mrducky.parser.Parser;
 import mrducky.storage.Storage;
 import mrducky.task.Deadline;
@@ -39,7 +39,7 @@ public class MrDucky {
                 if (handleInput(input, tasks, storage, ui)) {
                     break;
                 }
-            } catch (DukeException e) {
+            } catch (MrDuckyException e) {
                 ui.showError(e.getMessage());
             }
         }
@@ -47,7 +47,7 @@ public class MrDucky {
 
     // Helper function to handle user input and perform corresponding actions on tasks list
     // Separated from main for clarity, use try/catch around each call to handle exceptions
-    private static boolean handleInput(String input, List<Task> tasks, Storage storage, Ui ui) throws DukeException {
+    private static boolean handleInput(String input, List<Task> tasks, Storage storage, Ui ui) throws MrDuckyException {
         String trimmed = input == null ? "" : input.trim();
         if (trimmed.isEmpty()) {
             return false;
@@ -81,7 +81,7 @@ public class MrDucky {
         } else if (command.equals("todo")) {
             String desc = Parser.parseTodo(trimmed);
             if (desc.isEmpty()) {
-                throw new DukeException("OOPS!!! The description of a todo cannot be empty.");
+                throw new MrDuckyException("OOPS!!! The description of a todo cannot be empty.");
             }
             Task newTask = new ToDo(desc);
             tasks.add(newTask);
@@ -91,11 +91,11 @@ public class MrDucky {
         } else if (command.equals("deadline")) {
             String[] parts = Parser.parseDeadline(trimmed);
             if (parts[0].isEmpty()) {
-                throw new DukeException("OOPS!!! The description of a deadline cannot be empty.");
+                throw new MrDuckyException("OOPS!!! The description of a deadline cannot be empty.");
             }
             // Parse date string to LocalDateTime
             if (parts.length < 2 || parts[1].trim().isEmpty()) {
-                throw new DukeException("OOPS!!! A deadline needs a /by time.");
+                throw new MrDuckyException("OOPS!!! A deadline needs a /by time.");
             }
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/MM/yyyy HHmm");
             LocalDateTime due;
@@ -103,7 +103,7 @@ public class MrDucky {
             try {
                 due = LocalDateTime.parse(parts[1].trim(), formatter);
             } catch (DateTimeParseException e) {
-                throw new DukeException("OOPS!!! Please use d/MM/yyyy HHmm for deadlines. "
+                throw new MrDuckyException("OOPS!!! Please use d/MM/yyyy HHmm for deadlines. "
                         + "Example: 2/12/2019 1800");
             }
             Task newTask = new Deadline(parts[0].trim(), due);
@@ -114,15 +114,15 @@ public class MrDucky {
         } else if (command.equals("event")) {
             String details = trimmed.substring(5).trim();
             if (details.isEmpty()) {
-                throw new DukeException("OOPS!!! The description of an event cannot be empty.");
+                throw new MrDuckyException("OOPS!!! The description of an event cannot be empty.");
             }
             String[] parts = details.split(" /from ", 2);
             if (parts.length < 2) {
-                throw new DukeException("OOPS!!! An event needs a /from time.");
+                throw new MrDuckyException("OOPS!!! An event needs a /from time.");
             }
             String[] timeParts = parts[1].split(" /to ", 2);
             if (timeParts.length < 2 || timeParts[0].trim().isEmpty() || timeParts[1].trim().isEmpty()) {
-                throw new DukeException("OOPS!!! An event needs both /from and /to times.");
+                throw new MrDuckyException("OOPS!!! An event needs both /from and /to times.");
             }
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/MM/yyyy HHmm");
             LocalDateTime from;
@@ -131,7 +131,7 @@ public class MrDucky {
                 from = LocalDateTime.parse(timeParts[0].trim(), formatter);
                 to = LocalDateTime.parse(timeParts[1].trim(), formatter);
             } catch (DateTimeParseException e) {
-                throw new DukeException("OOPS!!! Please use d/MM/yyyy HHmm for events. "
+                throw new MrDuckyException("OOPS!!! Please use d/MM/yyyy HHmm for events. "
                         + "Example: 2/12/2019 1800");
             }
             Task newTask = new Event(parts[0].trim(), from, to);
@@ -148,7 +148,7 @@ public class MrDucky {
         } else if (command.equals("find")) {
             String keyword = trimmed.substring(4).trim();
             if (keyword.isEmpty()) {
-                throw new DukeException("OOPS!!! The keyword for find cannot be empty.");
+                throw new MrDuckyException("OOPS!!! The keyword for find cannot be empty.");
             }
             String normalizedKeyword = keyword.toLowerCase();
             List<Task> foundTasks = tasks.stream()
@@ -158,7 +158,8 @@ public class MrDucky {
             return false;
 
         }
-        throw new DukeException("OOPS!!! I'm sorry, but I don't know what that means :-(");
+        throw new MrDuckyException("OOPS!!! I'm sorry, but I don't know what that means :-(");
     }
 
 }
+

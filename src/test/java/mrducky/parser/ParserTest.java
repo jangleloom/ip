@@ -5,7 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
 
-import mrducky.exception.DukeException;
+import mrducky.exception.MrDuckyException;
 
 /**
  * Tests parsing of user inputs.
@@ -13,51 +13,52 @@ import mrducky.exception.DukeException;
 public class ParserTest {
 
     @Test
-    public void parseDeadline_validInput_returnsDescriptionAndBy() throws DukeException {
+    public void parseDeadline_validInput_returnsDescriptionAndBy() throws MrDuckyException {
         String input = "deadline return book /by 2/12/2019 1800";
         String[] result = Parser.parseDeadline(input);
         assertArrayEquals(new String[]{"return book", "2/12/2019 1800"}, result);
     }
 
     @Test
-    public void parseDeadline_missingBy_throwsDukeException() {
+    public void parseDeadline_missingBy_throwsMrDuckyException() {
         String input = "deadline return book";
-        assertThrows(DukeException.class, () -> Parser.parseDeadline(input));
+        assertThrows(MrDuckyException.class, () -> Parser.parseDeadline(input));
     }
 
     @Test
-    public void parseDeadline_missingDescription_throwsDukeException() {
+    public void parseDeadline_missingDescription_throwsMrDuckyException() {
         String input = "deadline /by 2/12/2019 1800";
-        assertThrows(DukeException.class, () -> Parser.parseDeadline(input));
+        assertThrows(MrDuckyException.class, () -> Parser.parseDeadline(input));
     }
 
     @Test
-    public void parseTodo_emptyDescription_throwsDukeException() {
+    public void parseTodo_emptyDescription_throwsMrDuckyException() {
         String input = "todo";
-        assertThrows(DukeException.class, () -> Parser.parseTodo(input));
+        assertThrows(MrDuckyException.class, () -> Parser.parseTodo(input));
     }
 
     @Test
-    public void parseEvent_missingFrom_throwsDukeException() {
+    public void parseEvent_missingFrom_throwsMrDuckyException() {
         String input = "event meeting /to 2/12/2019 1800";
-        assertThrows(DukeException.class, () -> Parser.parseEvent(input));
+        assertThrows(MrDuckyException.class, () -> Parser.parseEvent(input));
     }
 
     @Test
-    public void parseEvent_missingTo_throwsDukeException() {
+    public void parseEvent_missingTo_throwsMrDuckyException() {
         String input = "event meeting /from 2/12/2019 1800";
-        assertThrows(DukeException.class, () -> Parser.parseEvent(input));
+        assertThrows(MrDuckyException.class, () -> Parser.parseEvent(input));
     }
 
     @Test
-    public void parseIndex_missingIndex_throwsDukeException() {
+    public void parseIndex_missingIndex_throwsMrDuckyException() {
         String input = "mark";
-        assertThrows(DukeException.class, () -> Parser.parseIndex(input, "mark"));
+        assertThrows(MrDuckyException.class, () -> Parser.parseIndex(input, "mark"));
     }
 
     @Test
-    public void parseIndex_nonNumeric_throwsDukeException() {
+    public void parseIndex_nonNumeric_throwsMrDuckyException() {
         String input = "mark abc";
-        assertThrows(DukeException.class, () -> Parser.parseIndex(input, "mark"));
+        assertThrows(MrDuckyException.class, () -> Parser.parseIndex(input, "mark"));
     }
 }
+
