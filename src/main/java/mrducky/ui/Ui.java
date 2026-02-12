@@ -20,29 +20,29 @@ public class Ui {
     }
 
     /**
+     * Displays a line separator.
+    */
+    public void showLine() {
+        System.out.println(LINE);
+    }
+
+    /**
      * Displays the welcome message.
     */
     public void showWelcome() {
-        System.out.println(LINE);
+        showLine();
         System.out.println("Hello! I'm MrDucky");
         System.out.println("What can I do for you?");
-        System.out.println(LINE);
+        showLine();
     }
 
     /**
      * Displays the goodbye message.
     */
     public void showGoodbye() {
-        System.out.println(LINE);
+        showLine();
         System.out.println("Bye. Hope to see you again soon!");
-        System.out.println(LINE);
-    }
-
-    /**
-     * Displays a line separator.
-    */
-    public void showLine() {
-        System.out.println(LINE);
+        showLine();
     }
 
     /**

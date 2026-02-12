@@ -6,27 +6,27 @@ import java.time.format.DateTimeFormatter;
  * Represents a deadline task with a due time.
  */
 public class Deadline extends Task {
-    private LocalDateTime due;
+    private LocalDateTime dueDate;
 
     /**
      * Creates a deadline task with a description and due time.
      *
      * @param description Task description.
-     * @param due Due time for the task.
+     * @param dueDate Due time for the task.
      */
-    public Deadline(String description, LocalDateTime due) {
+    public Deadline(String description, LocalDateTime dueDate) {
         super(description);
-        assert due != null : "Deadline due time cannot be null";
-        this.due = due;
+        assert dueDate != null : "Deadline due time cannot be null";
+        this.dueDate = dueDate;
     }
 
-    public LocalDateTime getDue() {
-        return due;
+    public LocalDateTime getDueDate() {
+        return dueDate;
     }
 
     @Override
     public String toString() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM d yyyy, h:mm a");
-        return "[D]" + super.toString() + " (by: " + due.format(formatter) + ")";
+        return "[D]" + super.toString() + " (by: " + dueDate.format(formatter) + ")";
     }
 }
