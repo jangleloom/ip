@@ -33,6 +33,11 @@ public class Main extends Application {
         dialogContainer = new VBox();
         dialogContainer.setSpacing(10);
         dialogContainer.setPadding(new Insets(10));
+
+        dialogContainer.getChildren().add(
+                DialogBox.getMrDuckyDialog("Hello! I'm MrDucky. How can I assist you today?", mrDuckyImage)
+        );
+
         scrollPane.setContent(dialogContainer);
 
         userInput = new TextField();

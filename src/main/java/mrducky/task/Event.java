@@ -7,33 +7,33 @@ import java.time.format.DateTimeFormatter;
  * Represents an event task with a start and end time.
  */
 public class Event extends Task {
-    private LocalDateTime from;
-    private LocalDateTime to;
+    private LocalDateTime fromTime;
+    private LocalDateTime toTime;
 
     /**
      * Creates an event task with a description, start time, and end time.
      *
      * @param description Task description.
-     * @param from Start time of the event.
-     * @param to End time of the event.
+     * @param fromTime Start time of the event.
+     * @param toTime End time of the event.
      */
-    public Event(String description, LocalDateTime from, LocalDateTime to) {
+    public Event(String description, LocalDateTime fromTime, LocalDateTime toTime) {
         super(description);
-        this.from = from;
-        this.to = to;
+        this.fromTime = fromTime;
+        this.toTime = toTime;
     }
 
-    public LocalDateTime getFrom() {
-        return from;
+    public LocalDateTime getFromTime() {
+        return fromTime;
     }
 
-    public LocalDateTime getTo() {
-        return to;
+    public LocalDateTime getToTime() {
+        return toTime;
     }
 
     @Override
     public String toString() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM d yyyy, h:mm a");
-        return "[E]" + super.toString() + " (from: " + from.format(formatter) + " to: " + to.format(formatter) + ")";
+        return "[E]" + super.toString() + " (from: " + fromTime.format(formatter) + " to: " + toTime.format(formatter) + ")";
     }
 }

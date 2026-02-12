@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.List;
+import java.util.ArrayList;
 
 import mrducky.exception.MrDuckyException;
 import mrducky.parser.Parser;
@@ -36,7 +37,13 @@ public class MrDuckyApp {
      */
     public MrDuckyApp(Storage storage) {
         this.storage = storage;
-        this.tasks = storage.load();
+        List<Task> loadedTasks;
+        try {
+            loadedTasks = storage.load();
+        } catch (MrDuckyException e) {
+            loadedTasks = new ArrayList<>();
+        }
+        this.tasks = loadedTasks;
     }
 
     /**
@@ -83,6 +90,9 @@ public class MrDuckyApp {
 
     private String handleMark(String input) throws MrDuckyException {
         int index = Parser.parseIndex(input, "mark");
+        if (index < 0 || index >= tasks.size()) {
+            throw new MrDuckyException("OOPS!!! The task index provided is out of bounds.");
+        }
         Task task = tasks.get(index);
         task.mark();
         storage.save(tasks);
@@ -91,6 +101,9 @@ public class MrDuckyApp {
 
     private String handleUnmark(String input) throws MrDuckyException {
         int index = Parser.parseIndex(input, "unmark");
+        if (index < 0 || index >= tasks.size()) {
+            throw new MrDuckyException("OOPS!!! The task index provided is out of bounds.");
+        }
         Task task = tasks.get(index);
         task.unmark();
         storage.save(tasks);

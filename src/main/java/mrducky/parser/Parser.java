@@ -55,7 +55,11 @@ public class Parser {
      * @throws MrDuckyException If the description is missing.
      */
     public static String parseTodo(String input) throws MrDuckyException {
-        String details = input.substring(4).trim();
+        int firstSpace = input.indexOf(" ");
+        if (firstSpace == -1) {
+            throw new MrDuckyException("OOPS!!! The description of a todo cannot be empty.");
+        }
+        String details = input.substring(firstSpace + 1).trim();
         if (details.isEmpty()) {
             throw new MrDuckyException("OOPS!!! The description of a todo cannot be empty.");
         }
@@ -70,7 +74,11 @@ public class Parser {
      * @throws MrDuckyException If the description or due date is missing or invalid.
      */
     public static String[] parseDeadline(String input) throws MrDuckyException {
-        String details = input.substring(8).trim();
+        int firstSpace = input.indexOf(" ");
+        if (firstSpace == -1) {
+            throw new MrDuckyException("OOPS!!! The description of a deadline cannot be empty.");
+        }
+        String details = input.substring(firstSpace + 1).trim();
         if (details.isEmpty()) {
             throw new MrDuckyException("OOPS!!! The description of a deadline cannot be empty.");
         }
@@ -89,7 +97,11 @@ public class Parser {
      * @throws MrDuckyException If the description, from date, or to date is missing or invalid.
      */
     public static String[] parseEvent(String input) throws MrDuckyException {
-        String details = input.substring(5).trim();
+        int firstSpace = input.indexOf(" ");
+        if (firstSpace == -1) {
+            throw new MrDuckyException("OOPS!!! The description of an event cannot be empty.");
+        }
+        String details = input.substring(firstSpace + 1).trim();
         if (details.isEmpty()) {
             throw new MrDuckyException("OOPS!!! The description of an event cannot be empty.");
         }

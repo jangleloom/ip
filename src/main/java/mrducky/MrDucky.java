@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.List;
+import java.util.ArrayList;
 
 import mrducky.exception.MrDuckyException;
 import mrducky.parser.Parser;
@@ -28,7 +29,13 @@ public class MrDucky {
         Ui ui = new Ui();
 
         Storage storage = new Storage(Path.of("data", "mrducky.txt"));
-        List<Task> tasks = storage.load();
+        List<Task> tasks;
+        try {
+            tasks = storage.load();
+        } catch (MrDuckyException e) {
+            ui.showLoadingError(e.getMessage());
+            tasks = new ArrayList<>();
+        }
 
         ui.showWelcome();
 
@@ -45,8 +52,15 @@ public class MrDucky {
         }
     }
 
-    // Helper function to handle user input and perform corresponding actions on tasks list
-    // Separated from main for clarity, use try/catch around each call to handle exceptions
+    /**
+     * Processes user input and performs corresponding actions.
+     * @param input
+     * @param tasks
+     * @param storage
+     * @param ui
+     * @return
+     * @throws MrDuckyException
+     */
     private static boolean handleInput(String input, List<Task> tasks, Storage storage, Ui ui) throws MrDuckyException {
         String trimmed = input == null ? "" : input.trim();
         if (trimmed.isEmpty()) {

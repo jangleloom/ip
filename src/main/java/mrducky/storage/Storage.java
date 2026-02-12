@@ -6,7 +6,10 @@ import java.nio.file.Path;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
+import mrducky.exception.MrDuckyException;
 import mrducky.task.Deadline;
 import mrducky.task.Event;
 import mrducky.task.Task;
@@ -17,6 +20,7 @@ import mrducky.task.ToDo;
  */
 public class Storage {
     private final Path filePath;
+    private static final Logger logger = Logger.getLogger(Storage.class.getName());
 
     /**
      * Creates a storage handler that reads and writes to the given file path.
@@ -32,7 +36,7 @@ public class Storage {
      *
      * @return List of tasks loaded from disk.
      */
-    public List<Task> load() {
+    public List<Task> load() throws MrDuckyException {
         // If file/folder doesn't exist, create new ArrayList<>()
         List<Task> tasks = new ArrayList<>();
         if (!Files.exists(filePath)) {
@@ -49,7 +53,8 @@ public class Storage {
             }
         } catch (IOException e) {
             // Handle exception
-            System.out.println("Warning! Could not read data file: " + e.getMessage());
+            logger.log(Level.WARNING, "Could not read data file: " + filePath, e);
+            throw new MrDuckyException("Could not read data file: " + filePath);
         }
         return tasks;
     }
@@ -59,7 +64,7 @@ public class Storage {
      *
      * @param tasks Tasks to save.
      */
-    public void save(List<Task> tasks) {
+    public void save(List<Task> tasks) throws MrDuckyException {
         // Ensure parent folder exists
         try {
             Path parentDir = filePath.getParent();
@@ -77,7 +82,8 @@ public class Storage {
             // Write lines to file
             Files.write(filePath, lines);
         } catch (IOException e) {
-            System.out.println("Warning! Could not create data directory: " + e.getMessage());
+            logger.log(Level.WARNING, "Could not write to data file: " + filePath, e);
+            throw new MrDuckyException("Could not write to data file: " + filePath);
         }
     }
 
@@ -110,8 +116,8 @@ public class Storage {
             if (parts.length < 4) {
                 return null; // Invalid Deadline format
             }
-            LocalDateTime due = LocalDateTime.parse(parts[3]);
-            task = new Deadline(description, due);
+            LocalDateTime dueDate = LocalDateTime.parse(parts[3]);
+            task = new Deadline(description, dueDate);
             break;
         case "E":
             if (parts.length < 5) {
@@ -135,10 +141,10 @@ public class Storage {
             return "T | " + done + " | " + task.getDescription();
         } else if (task instanceof Deadline) {
             Deadline d = (Deadline) task;
-            return "D | " + done + " | " + task.getDescription() + " | " + d.getDue();
+            return "D | " + done + " | " + task.getDescription() + " | " + d.getDueDate();
         } else if (task instanceof Event) {
             Event e = (Event) task;
-            return "E | " + done + " | " + task.getDescription() + " | " + e.getFrom() + " | " + e.getTo();
+            return "E | " + done + " | " + task.getDescription() + " | " + e.getFromTime() + " | " + e.getToTime();
         } else {
             throw new IllegalArgumentException("Unknown task type");
         }

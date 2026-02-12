@@ -25,6 +25,9 @@ public class DialogBox extends HBox {
      * @param image Dialog image.
      */
     private DialogBox(String text, Image image) {
+        assert text != null : "Text cannot be null";
+        assert image != null : "Image cannot be null";
+        
         this.text = new Label(text);
         displayPicture = new ImageView(image);
 
