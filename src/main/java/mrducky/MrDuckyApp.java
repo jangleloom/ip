@@ -6,6 +6,9 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.List;
 import java.util.ArrayList;
+import java.io.InputStream;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 
 import mrducky.exception.MrDuckyException;
 import mrducky.parser.Parser;
@@ -214,16 +217,18 @@ public class MrDuckyApp {
     }
 
     private String formatHelp() {
-        return "Here are the commands you can use:\n"
-                + "  list\n"
-                + "  todo <description>\n"
-                + "  deadline <description> /by d/MM/yyyy HHmm\n"
-                + "  event <description> /from d/MM/yyyy HHmm /to d/MM/yyyy HHmm\n"
-                + "  mark <index>\n"
-                + "  unmark <index>\n"
-                + "  delete <index>\n"
-                + "  find <keyword>\n"
-                + "  bye";
+        return loadHelpText();
+    }
+
+    private String loadHelpText() {
+        try (InputStream in = MrDuckyApp.class.getResourceAsStream("/help.txt")) {
+            if (in == null) {
+                return "Help file not found.";
+            }
+            return new String(in.readAllBytes(), StandardCharsets.UTF_8);
+        } catch (IOException e) {
+            return ("Could not load help file information.");
+        }
     }
 }
 

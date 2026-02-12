@@ -1,0 +1,11 @@
+MrDucky Help
+Commands:
+  list
+  todo <description>
+  deadline <description> /by d/MM/yyyy HHmm
+  event <description> /from d/MM/yyyy HHmm /to d/MM/yyyy HHmm
+  mark <index>
+  unmark <index>
+  delete <index>
+  find <keyword>
+  bye
