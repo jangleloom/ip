@@ -19,8 +19,11 @@ public class Event extends Task {
      */
     public Event(String description, LocalDateTime fromTime, LocalDateTime toTime) {
         super(description);
+        assert fromTime != null && toTime != null : "Event times cannot be null";
         this.fromTime = fromTime;
         this.toTime = toTime;
+}
+
     }
 
     public LocalDateTime getFromTime() {

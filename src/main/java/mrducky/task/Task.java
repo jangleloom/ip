@@ -8,6 +8,7 @@ public class Task {
     private boolean isDone;
 
     Task(String description) {
+        assert description != null : "Description cannot be null";
         this.isDone = false;
         this.description = description;
     }
