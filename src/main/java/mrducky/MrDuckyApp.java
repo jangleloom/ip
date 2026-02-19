@@ -174,6 +174,9 @@ public class MrDuckyApp {
 
     private String handleDelete(String input) throws MrDuckyException {
         int index = Parser.parseIndex(input, "delete");
+        if (index < 0 || index >= tasks.size()) {
+            throw new MrDuckyException("OOPS!!! The task index provided is out of bounds.");
+        }
         Task task = tasks.remove(index);
         storage.save(tasks);
         return "Noted. I've removed this task:\n  " + task

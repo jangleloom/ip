@@ -80,6 +80,9 @@ public class MrDucky {
             return false;
         } else if (command.equals("mark")) {
             int index = Parser.parseIndex(trimmed, "mark");
+            if (index < 0 || index >= tasks.size()) {
+                throw new MrDuckyException("OOPS!!! The task index provided is out of bounds.");
+            }
             Task t = tasks.get(index);
             t.mark();
             storage.save(tasks);
@@ -87,6 +90,9 @@ public class MrDucky {
             return false;
         } else if (command.equals("unmark")) {
             int index = Parser.parseIndex(trimmed, "unmark");
+            if (index < 0 || index >= tasks.size()) {
+                throw new MrDuckyException("OOPS!!! The task index provided is out of bounds.");
+            }
             Task t = tasks.get(index);
             t.unmark();
             storage.save(tasks);
@@ -155,6 +161,9 @@ public class MrDucky {
             return false;
         } else if (command.equals("delete")) {
             int index = Parser.parseIndex(trimmed, "delete");
+            if (index < 0 || index >= tasks.size()) {
+                throw new MrDuckyException("OOPS!!! The task index provided is out of bounds.");
+            }
             Task t = tasks.remove(index);
             storage.save(tasks);
             ui.showDeletedTask(t, tasks.size());

@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.time.format.DateTimeParseException;
 
 import mrducky.exception.MrDuckyException;
 import mrducky.task.Deadline;
@@ -89,50 +90,47 @@ public class Storage {
 
 
     private Task parseLine(String line) {
-        // Turn line into Task object (ToDo, Deadline, Event)
-        // Split line by " | " (type | isDone | description | ... )
-        // e.g. D | 1 | return book | June 6th
-        String[] parts = line.split("\\s*\\|\\s*");
+        try {
+            String[] parts = line.split("\\s*\\|\\s*");
+            if (parts.length < 3) {
+                return null;
+            }
 
-        if (parts.length < 3) {
-            // Invalid line format, handle accordingly
+            String type = parts[0];
+            boolean isDone = parts[1].equals("1");
+            String description = parts[2];
+
+            Task task;
+            switch (type) {
+            case "T":
+                task = new ToDo(description);
+                break;
+            case "D":
+                if (parts.length < 4) {
+                    return null;
+                }
+                LocalDateTime dueDate = LocalDateTime.parse(parts[3]);
+                task = new Deadline(description, dueDate);
+                break;
+            case "E":
+                if (parts.length < 5) {
+                    return null;
+                }
+                LocalDateTime from = LocalDateTime.parse(parts[3]);
+                LocalDateTime to = LocalDateTime.parse(parts[4]);
+                task = new Event(description, from, to);
+                break;
+            default:
+                return null;
+            }
+            task.setDone(isDone);
+            return task;
+        } catch (DateTimeParseException e) {
+            logger.log(Level.WARNING, "Skipping corrupted task line: " + line, e);
             return null;
         }
-
-        // Determine type based on first part
-        // T - new ToDo(description)
-        // D - new Deadline(description | due)
-        // E - new Event(description | from | to)
-        String type = parts[0];
-        boolean isDone = parts[1].equals("1");
-        String description = parts[2];
-
-        Task task;
-        switch (type) {
-        case "T":
-            task = new ToDo(description);
-            break;
-        case "D":
-            if (parts.length < 4) {
-                return null; // Invalid Deadline format
-            }
-            LocalDateTime dueDate = LocalDateTime.parse(parts[3]);
-            task = new Deadline(description, dueDate);
-            break;
-        case "E":
-            if (parts.length < 5) {
-                return null; // Invalid Event format
-            }
-            LocalDateTime from = LocalDateTime.parse(parts[3]);
-            LocalDateTime to = LocalDateTime.parse(parts[4]);
-            task = new Event(description, from, to);
-            break;
-        default:
-            return null; // Unknown task type
-        }
-        task.setDone(isDone);
-        return task;
     }
+
 
     private String formatTask(Task task) {
         String done = task.isDone() ? "1" : "0";
