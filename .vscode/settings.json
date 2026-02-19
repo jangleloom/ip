@@ -1,0 +1,10 @@
+{
+  "java.debug.settings.stepFilters.enabled": true,
+  "java.debug.settings.stepFilters.skipClasses": [
+    "java.*",
+    "javax.*",
+    "sun.*",
+    "com.sun.*",
+    "jdk.*"
+  ]
+}
