@@ -2,7 +2,7 @@
 
 ![Ui](Ui.png)
 
-MrDucky is a simple task tracker with a friendly GUI. You can add tasks, mark them done, find tasks by keyword, and delete tasks when they are no longer needed.
+**MrDucky** is a simple task tracker with a friendly GUI. You can add tasks, mark them done, find tasks by keyword, and delete tasks when they are no longer needed.
 
 ## Quick Start
 1. Launch the app.
@@ -13,9 +13,24 @@ MrDucky is a simple task tracker with a friendly GUI. You can add tasks, mark th
 Commands follow this pattern:
 `command <arguments>`
 
-Date and time input uses `d/MM/yyyy HHmm` (24-hour). Example: `23/02/2026 1800`.
+> [!NOTE]
+> Dates use `d/MM/yyyy HHmm` (24-hour). Example: `23/02/2026 1800`.
 
-## Task Types and Display Format
+## Command Summary
+| Command | Purpose | Format |
+| --- | --- | --- |
+| `list` | Show all tasks | `list` |
+| `todo` | Add a todo | `todo <description>` |
+| `deadline` | Add a deadline | `deadline <description> /by d/MM/yyyy HHmm` |
+| `event` | Add an event | `event <description> /from d/MM/yyyy HHmm /to d/MM/yyyy HHmm` |
+| `mark` | Mark task as done | `mark <index>` |
+| `unmark` | Mark task as not done | `unmark <index>` |
+| `delete` | Remove a task | `delete <index>` |
+| `find` | Find tasks by keyword | `find <keyword>` |
+| `help` | Show help | `help` |
+| `bye` | Exit the app | `bye` |
+
+## Tasks in the List
 MrDucky shows tasks with a type and done marker:
 
 ```
@@ -24,7 +39,7 @@ MrDucky shows tasks with a type and done marker:
 [E][ ] project meeting (from: Feb 24 2026, 2:00 PM to: Feb 24 2026, 3:30 PM)
 ```
 
-## Commands
+## Commands (Detailed)
 
 ### Add a todo
 Adds a simple task.
@@ -138,7 +153,7 @@ Usage:
 
 ## Notes
 - Indexes are 1-based, so the first task is `1`.
-- Input dates must follow `d/MM/yyyy HHmm` (e.g. `2/12/2019 1800`).
+- If a command expects an index, use `list` to check the current numbering.
 
 ## Common Errors
 - If an index is out of range, MrDucky shows an error message.
