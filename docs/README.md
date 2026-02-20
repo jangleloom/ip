@@ -71,6 +71,7 @@ MrDucky shows tasks with a type and done marker:
 **Purpose:** Exit the app  
 **Format:** `bye`
 
+### Add a todo
 Usage:
 `todo <description>`
 
