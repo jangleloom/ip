@@ -18,6 +18,7 @@ Commands follow this pattern:
 
 ## Command Summary
 
+<markdown>
 | Command | Purpose | Format |
 | --- | --- | --- |
 | `list` | Show all tasks | `list` |
@@ -30,6 +31,7 @@ Commands follow this pattern:
 | `find` | Find tasks by keyword | `find <keyword>` |
 | `help` | Show help | `help` |
 | `bye` | Exit the app | `bye` |
+</markdown>
 
 ## Tasks in the List
 MrDucky shows tasks with a type and done marker:
