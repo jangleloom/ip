@@ -17,6 +17,7 @@ Commands follow this pattern:
 > Dates use `d/MM/yyyy HHmm` (24-hour). Example: `23/02/2026 1800`.
 
 ## Command Summary
+
 | Command | Purpose | Format |
 | --- | --- | --- |
 | `list` | Show all tasks | `list` |
