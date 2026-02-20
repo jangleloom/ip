@@ -29,32 +29,47 @@ MrDucky shows tasks with a type and done marker:
 [E][ ] project meeting (from: Feb 24 2026, 2:00 PM to: Feb 24 2026, 3:30 PM)
 ```
 
-## Commands (Detailed)
+## Command Summary
 
-### Add a todo## Command Summary
+### `list`
+**Purpose:** Show all tasks  
+**Format:** `list`
 
-<table>
-  <thead>
-    <tr>
-      <th>Command</th>
-      <th>Purpose</th>
-      <th>Format</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr><td><code>list</code></td><td>Show all tasks</td><td><code>list</code></td></tr>
-    <tr><td><code>todo</code></td><td>Add a todo</td><td><code>todo &lt;description&gt;</code></td></tr>
-    <tr><td><code>deadline</code></td><td>Add a deadline</td><td><code>deadline &lt;description&gt; /by d/MM/yyyy HHmm</code></td></tr>
-    <tr><td><code>event</code></td><td>Add an event</td><td><code>event &lt;description&gt; /from d/MM/yyyy HHmm /to d/MM/yyyy HHmm</code></td></tr>
-    <tr><td><code>mark</code></td><td>Mark task as done</td><td><code>mark &lt;index&gt;</code></td></tr>
-    <tr><td><code>unmark</code></td><td>Mark task as not done</td><td><code>unmark &lt;index&gt;</code></td></tr>
-    <tr><td><code>delete</code></td><td>Remove a task</td><td><code>delete &lt;index&gt;</code></td></tr>
-    <tr><td><code>find</code></td><td>Find tasks by keyword</td><td><code>find &lt;keyword&gt;</code></td></tr>
-    <tr><td><code>help</code></td><td>Show help</td><td><code>help</code></td></tr>
-    <tr><td><code>bye</code></td><td>Exit the app</td><td><code>bye</code></td></tr>
-  </tbody>
-</table>
-Adds a simple task.
+### `todo`
+**Purpose:** Add a todo  
+**Format:** `todo <description>`
+
+### `deadline`
+**Purpose:** Add a deadline  
+**Format:** `deadline <description> /by d/MM/yyyy HHmm`
+
+### `event`
+**Purpose:** Add an event  
+**Format:** `event <description> /from d/MM/yyyy HHmm /to d/MM/yyyy HHmm`
+
+### `mark`
+**Purpose:** Mark task as done  
+**Format:** `mark <index>`
+
+### `unmark`
+**Purpose:** Mark task as not done  
+**Format:** `unmark <index>`
+
+### `delete`
+**Purpose:** Remove a task  
+**Format:** `delete <index>`
+
+### `find`
+**Purpose:** Find tasks by keyword  
+**Format:** `find <keyword>`
+
+### `help`
+**Purpose:** Show help  
+**Format:** `help`
+
+### `bye`
+**Purpose:** Exit the app  
+**Format:** `bye`
 
 Usage:
 `todo <description>`
