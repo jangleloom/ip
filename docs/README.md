@@ -18,20 +18,7 @@ Commands follow this pattern:
 
 ## Command Summary
 
-<markdown>
-| Command | Purpose | Format |
-| --- | --- | --- |
-| `list` | Show all tasks | `list` |
-| `todo` | Add a todo | `todo <description>` |
-| `deadline` | Add a deadline | `deadline <description> /by d/MM/yyyy HHmm` |
-| `event` | Add an event | `event <description> /from d/MM/yyyy HHmm /to d/MM/yyyy HHmm` |
-| `mark` | Mark task as done | `mark <index>` |
-| `unmark` | Mark task as not done | `unmark <index>` |
-| `delete` | Remove a task | `delete <index>` |
-| `find` | Find tasks by keyword | `find <keyword>` |
-| `help` | Show help | `help` |
-| `bye` | Exit the app | `bye` |
-</markdown>
+
 
 ## Tasks in the List
 MrDucky shows tasks with a type and done marker:
@@ -44,7 +31,29 @@ MrDucky shows tasks with a type and done marker:
 
 ## Commands (Detailed)
 
-### Add a todo
+### Add a todo## Command Summary
+
+<table>
+  <thead>
+    <tr>
+      <th>Command</th>
+      <th>Purpose</th>
+      <th>Format</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td><code>list</code></td><td>Show all tasks</td><td><code>list</code></td></tr>
+    <tr><td><code>todo</code></td><td>Add a todo</td><td><code>todo &lt;description&gt;</code></td></tr>
+    <tr><td><code>deadline</code></td><td>Add a deadline</td><td><code>deadline &lt;description&gt; /by d/MM/yyyy HHmm</code></td></tr>
+    <tr><td><code>event</code></td><td>Add an event</td><td><code>event &lt;description&gt; /from d/MM/yyyy HHmm /to d/MM/yyyy HHmm</code></td></tr>
+    <tr><td><code>mark</code></td><td>Mark task as done</td><td><code>mark &lt;index&gt;</code></td></tr>
+    <tr><td><code>unmark</code></td><td>Mark task as not done</td><td><code>unmark &lt;index&gt;</code></td></tr>
+    <tr><td><code>delete</code></td><td>Remove a task</td><td><code>delete &lt;index&gt;</code></td></tr>
+    <tr><td><code>find</code></td><td>Find tasks by keyword</td><td><code>find &lt;keyword&gt;</code></td></tr>
+    <tr><td><code>help</code></td><td>Show help</td><td><code>help</code></td></tr>
+    <tr><td><code>bye</code></td><td>Exit the app</td><td><code>bye</code></td></tr>
+  </tbody>
+</table>
 Adds a simple task.
 
 Usage:
