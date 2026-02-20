@@ -22,8 +22,6 @@ public class Event extends Task {
         assert fromTime != null && toTime != null : "Event times cannot be null";
         this.fromTime = fromTime;
         this.toTime = toTime;
-}
-
     }
 
     public LocalDateTime getFromTime() {

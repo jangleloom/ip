@@ -61,32 +61,48 @@ public class MrDuckyApp {
             return "";
         }
 
-        String command = Parser.getCommandWord(trimmed).toLowerCase();
-        boolean hasNoArgs = trimmed.equalsIgnoreCase(command);
         try {
-            if (command.equals("bye") && hasNoArgs) {
-                return "Bye. Hope to see you again soon!";
-            } else if (command.equals("list") && hasNoArgs) {
-                return formatTaskList();
-            } else if (command.equals("help") && hasNoArgs) {
-                return formatHelp();
-            } else if (command.equals("mark")) {
-                return handleMark(trimmed);
-            } else if (command.equals("unmark")) {
-                return handleUnmark(trimmed);
-            } else if (command.equals("todo")) {
-                return handleTodo(trimmed);
-            } else if (command.equals("deadline")) {
-                return handleDeadline(trimmed);
-            } else if (command.equals("event")) {
-                return handleEvent(trimmed);
-            } else if (command.equals("delete")) {
-                return handleDelete(trimmed);
-            } else if (command.equals("find")) {
-                return handleFind(trimmed);
-            }
+            return dispatchCommand(trimmed);
         } catch (MrDuckyException e) {
             return e.getMessage();
+        }
+    }
+
+    private String dispatchCommand(String trimmed) throws MrDuckyException {
+        String command = Parser.getCommandWord(trimmed).toLowerCase();
+        boolean hasNoArgs = trimmed.equalsIgnoreCase(command);
+        switch (command) {
+        case "bye":
+            if (hasNoArgs) {
+                return "Bye. Hope to see you again soon!";
+            }
+            break;
+        case "list":
+            if (hasNoArgs) {
+                return formatTaskList();
+            }
+            break;
+        case "help":
+            if (hasNoArgs) {
+                return formatHelp();
+            }
+            break;
+        case "mark":
+            return handleMark(trimmed);
+        case "unmark":
+            return handleUnmark(trimmed);
+        case "todo":
+            return handleTodo(trimmed);
+        case "deadline":
+            return handleDeadline(trimmed);
+        case "event":
+            return handleEvent(trimmed);
+        case "delete":
+            return handleDelete(trimmed);
+        case "find":
+            return handleFind(trimmed);
+        default:
+            break;
         }
         return "OOPS!!! I'm sorry, but I don't know what that means :-(";
     }
